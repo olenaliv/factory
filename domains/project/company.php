@@ -14,7 +14,7 @@
 		<input type="submit" name="search" value="Поиск">
 	</form>
 	<?php 
-		$conn = @mysql_connect("localhost", "root") or die("Ошибка подключения Mysql!");
+		$conn = @mysql_connect("localhost", "user", "user") or die("Ошибка подключения Mysql!");
 		$db = @mysql_select_db("factory") or die("Ошибка подключения BD!");
 		$part=$_GET['part'];
 

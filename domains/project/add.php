@@ -22,7 +22,7 @@
 		<input type="submit" name="add" value="Добавление"/>
 	</form>
 	<?php
-		$conn = @mysql_connect("localhost","root") or die ("Ошибка соединения с MySQL");
+		$conn = @mysql_connect("localhost", "user", "user") or die ("Ошибка соединения с MySQL");
 		$db = @mysql_select_db("factory") or die ("Ошибка подключения к базе данных");
 
 		if(isset($_POST['add'])){

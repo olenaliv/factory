@@ -7,7 +7,7 @@
 <body>
 	<h2>Список сотрудников</h2>
 	<?php 
-		$conn = @mysql_connect("localhost", "root") or die("Ошибка подключения Mysql!");
+		$conn = @mysql_connect("localhost", "user", "user") or die("Ошибка подключения Mysql!");
 		$db = @mysql_select_db("factory") or die("Ошибка подключения BD!");
 		$sql = 'SELECT employees.id, employees.name, position.name, employees.number 
 		FROM employees, position WHERE employees.id_position = position.id';
