@@ -8,9 +8,9 @@
 	<h2>Сотрудники, которые выбрали дату отпуска</h2>
 	<form action = 'company.php' method="POST">
 		<label>Дата от</label>
-		<input type="date" name="dateFrom">
+		<input type="date" name="dateFrom" value="2019-07-01">
 		<label>Дата после</label>
-		<input type="date" name="dateInto">
+		<input type="date" name="dateInto" value="2019-12-31">
 		<input type="submit" name="search" value="Поиск">
 	</form>
 	<?php 
@@ -21,7 +21,7 @@
 			if (isset($_POST['search'])){			
 					$datefrom = $_POST['dateFrom'];
 					$dateinto = $_POST['dateInto'];
-					$sql="SELECT position.name, employees.name, vacation.date_from, vacation.date_into FROM position, employees, vacation WHERE position.id=employees.id_position AND employees.id = vacation.id_employees AND vacation.date_into<='$dateinto' AND vacation.date_from>='$datefrom'";
+					$sql="SELECT position.name, employees.name, vacation.date_from, vacation.date_into FROM position, employees, vacation WHERE position.id=employees.id_position AND employees.id = vacation.id_employees AND vacation.date_into<='$dateinto' AND vacation.date_from>='$datefrom' ";
 					$result = mysql_query($sql);	
 			}
 			else{

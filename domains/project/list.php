@@ -10,7 +10,7 @@
 		$conn = @mysql_connect("localhost", "user", "user") or die("Ошибка подключения Mysql!");
 		$db = @mysql_select_db("factory") or die("Ошибка подключения BD!");
 		$sql = 'SELECT employees.id, employees.name, position.name, employees.number 
-		FROM employees, position WHERE employees.id_position = position.id';
+		FROM employees, position WHERE employees.id_position = position.id  ORDER BY employees.id';
 
 		$result = mysql_query($sql);
 
