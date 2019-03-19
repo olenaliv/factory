@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Мар 18 2019 г., 13:28
+-- Время создания: Мар 19 2019 г., 11:16
 -- Версия сервера: 5.6.41
 -- Версия PHP: 5.5.38
 
@@ -32,21 +32,21 @@ CREATE TABLE `employees` (
   `id` int(11) NOT NULL,
   `name` text NOT NULL,
   `id_position` int(11) NOT NULL DEFAULT '0',
-  `id_vacation` int(11) NOT NULL,
   `number` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=cp1251;
+) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
 
 --
 -- Дамп данных таблицы `employees`
 --
 
-INSERT INTO `employees` (`id`, `name`, `id_position`, `id_vacation`, `number`) VALUES
-(17, 'Пивень Максим Георгиевич', 6, 7, 114),
-(16, 'Власова Ольга Ивановна', 5, 6, 113),
-(15, 'Иванов Владислав Иванович', 4, 5, 112),
-(14, 'Петренко Игорь Владимирович', 6, 4, 111),
-(18, 'Шуман Илона Викторовна', 6, 8, 115),
-(20, 'Лымар Анантолий Анатолиевич', 7, 9, 116);
+INSERT INTO `employees` (`id`, `name`, `id_position`, `number`) VALUES
+(18, 'Шуман Илона Викторовна', 6, 117),
+(20, 'Лымар Анантолий Анатолиевич', 7, 116),
+(61, 'Иванов Иван Иванович', 4, 115),
+(62, 'Корнов Юрий Олегович', 5, 111),
+(63, 'Иваненко Анна Викторовна', 7, 101),
+(64, 'Чин Ли Хан', 4, 102),
+(66, 'Не Фамилия Не', 6, 106);
 
 -- --------------------------------------------------------
 
@@ -58,7 +58,7 @@ CREATE TABLE `position` (
   `id` int(11) NOT NULL,
   `name` text NOT NULL,
   `description` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=cp1251;
+) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
 
 --
 -- Дамп данных таблицы `position`
@@ -81,19 +81,18 @@ CREATE TABLE `vacation` (
   `id_employees` int(11) NOT NULL DEFAULT '0',
   `date_from` date DEFAULT NULL,
   `date_into` date DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=cp1251;
+) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
 
 --
 -- Дамп данных таблицы `vacation`
 --
 
 INSERT INTO `vacation` (`id`, `id_employees`, `date_from`, `date_into`) VALUES
-(4, 14, '2019-01-01', '2019-01-10'),
-(5, 15, '2019-06-05', '2019-06-20'),
-(6, 16, '2019-03-26', '2019-03-31'),
-(7, 17, '2019-04-10', '2019-04-18'),
-(8, 18, '2019-07-11', '2019-07-18'),
-(9, 20, '2019-08-07', '2019-08-13');
+(5, 62, '2019-06-05', '2019-06-20'),
+(6, 61, '2019-03-26', '2019-03-31'),
+(7, 20, '2019-04-10', '2019-04-18'),
+(8, 64, '2019-07-11', '2019-07-18'),
+(9, 63, '2019-08-07', '2019-08-13');
 
 --
 -- Индексы сохранённых таблиц
@@ -103,7 +102,9 @@ INSERT INTO `vacation` (`id`, `id_employees`, `date_from`, `date_into`) VALUES
 -- Индексы таблицы `employees`
 --
 ALTER TABLE `employees`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `number` (`number`),
+  ADD KEY `id_position` (`id_position`);
 
 --
 -- Индексы таблицы `position`
@@ -115,7 +116,8 @@ ALTER TABLE `position`
 -- Индексы таблицы `vacation`
 --
 ALTER TABLE `vacation`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_employees` (`id_employees`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
@@ -125,7 +127,7 @@ ALTER TABLE `vacation`
 -- AUTO_INCREMENT для таблицы `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT для таблицы `position`
@@ -138,6 +140,22 @@ ALTER TABLE `position`
 --
 ALTER TABLE `vacation`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- Ограничения внешнего ключа сохраненных таблиц
+--
+
+--
+-- Ограничения внешнего ключа таблицы `employees`
+--
+ALTER TABLE `employees`
+  ADD CONSTRAINT `employees_ibfk_1` FOREIGN KEY (`id_position`) REFERENCES `position` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `vacation`
+--
+ALTER TABLE `vacation`
+  ADD CONSTRAINT `vacation_ibfk_1` FOREIGN KEY (`id_employees`) REFERENCES `employees` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
